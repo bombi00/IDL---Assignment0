@@ -79,9 +79,25 @@ Stesso risultato perchè KNN usa L2 norm e con n=1 il risultato è lo stesso. di
 = Task 2: implement a multi-class perceptron algorithm
 Task 2 required us to implement a multi-class perceptron from scratch in order to classify the same MINST dataset.\
 We have created the class `Perceptron` with attributes such as learning rate, number of epochs, weight and number of final classes, so it possible to use this class for other datasets with different number of labels.\
-As methods we have implemented the `fit` function used to train the model, the `predict` method used to predict the labels using the trained weigths and `accuracy` to calculate, as the name suggests, the accuracy of the predicted classes.\
+As methods we have implemented the `fit` function used to train the model, the `predict` method used to predict the labels using the trained weights and `accuracy` to calculate, as the name suggests, the accuracy of the predicted classes.\
+== Fit method
+The `fit` function takes as input the training data and the corresponding labels. First we initialize the weights, with values between 0 and 0.01, using the same shape of the input `X` data.\
+Then we iterate with two loops, first over each epoch, and then for every samples in the training set. We implemented the forward pass using `z = x @ self.W + self.b` to perform the dot product betweem the input and the weights and adding the bias, and then we used the `argmax` to obtain the most probable class. In this iteration we also calculate the if the prediction is wrong, useful to update the weights and bias, and also the loss (MSE).\
+For the weights and bias update we used another loop to iterate over each class. We adjust the bias as `bias = bias + learning_rate * error` and the weights as `weights = weights + learning_rate * error * x`.
+== Results
+We trained the model using different learning rates, specifically 0.001, 0.0001 and 0.00001, with 70 epochs and for each of them we plotted the loss curve and calculated the accuracy. In particular, we obtained the best result with a learning rate of 0.0001, reaching, as is possible to see in the #link(<6>)[Figure 6 and 7], an accuracy of almost 0.95% in the `train_set` where in the `test_set`the accuracy is 0.87%.
 
-#pagebreak()
+
+#figure(
+  image("/Image/loss.png", width: 100%),
+  caption: "Training loss during the epochs",
+)
+<6>
+#figure(
+  image("/Image/acc.png", width: 100%),
+  caption: "Training accuracy during the epochs",
+)
+
 = Contributions
 #set align(center)
 #table(
