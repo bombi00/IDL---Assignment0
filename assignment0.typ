@@ -13,19 +13,18 @@
 
 #set align(left)
 = Task 1: Data dimensionality, distance-based classifiers
-== Task 1.1
+== Task 1.1 <t>
 The first point of this task, ask us to calculate the center for each digit (from 0 to 9) from the MINST dataset in order to obtain a vector of dimension 256 ($16*16$ pixels) and a matrix of shape (10, 256).\
 We have imported the dataset and merged the file `train_in` with `train_out` to have a single  labeled dataframe. Then we have calculated the center of each digit using the `groupby` function from pandas and the `mean` function.\
 Once obtained the centers, we calculated the distance matrix by iterating over each pair of digit centers using two nested loops and computing the L2 norm (Euclidean distance) between them.
 
-
 <1>
 #figure(
   image("/Image/dm.png", width: 60%),
-  caption: "Distance Matrix for the centers of each digit",
+  caption: "Distance Matrix for the centers of each digit" ,
 )
 
-As is possible to see from the #link(<1>)[Figure 1], the digit that are more problematic to classify using only the centers are the 9 and 7 with the lower distance, where the most distance is between 0 and 1.\
+As is possible to see from the #link(<1>)[Figure 1], the digit that are more problematic to classify, using only the centers, are the 9 and 7, where the most distanced classes are 0 and 1.\
 
 == Task 1.2
 As second part of task 1, we reduced the dimensionality of the data using three different techniques: PCA, U-MAP and T-SNE.\
@@ -54,15 +53,15 @@ With T-SNE we have achived a result not good as U-MAP but still better than PCA.
 )
 == Task 1.3
 
-
-We implemented a nearest mean classifier both on the train and test set: this method is based on evaluation of the L2 norm. 
+<t2>
+We created a `nearest mean classifier` form scratch both on the train and test set: this method is based on evaluation of the L2 norm (Euclidean distance) between the different samples and the center dataset (ten vectors of 256 dimension made in the #link(<t>)[Task 1.1]). 
 Looking at the confusion matrix of the train set in #link(<5>)[Figure 5], we can see that the most problematic digits to classify 
-are 0 and 6, 7 and 9, 4 and 9. For the test set the most problematic digits are 0 and 6, 2 and 8 and 0 and 8. 
+are 0 and 6 in both test and train set. There are also some misclassification between the classes 7 and 9 but not as many as we could expect, given the low distance between their centers in the distance matrix.\
 The results are very similar between the two sets, with an accuracy of 0.86% for the train set and 0.80% for the test set: 
-this is due to the different sample size of the train and the test set (1706 and 999 respectively).
+this is due to the different sample size of the train and the test set (1706 and 999 respectively). 
 
 
-
+#pagebreak()
 <5>
 #figure(grid(columns: 2, row-gutter: 2mm, column-gutter: 1mm,
 
@@ -70,28 +69,15 @@ this is due to the different sample size of the train and the test set (1706 and
 
   "a) train set", "b) test set"),
 
-  caption: "Caption"
+  caption: "Confusion Matrices"
 
 )
 
 == Task 1.4
-We implemented a KNN (K-Nearest-Neighbor) classifier. The resulting confusion matrix is 
-the same as the nearest mean classifier, both for the train and test set, because we used k=1 and 
-the same distance metric (L2 norm). 
-By iterating the same procedure with increasing values of k, we can observe that the accuracy decreases,
-as the theory would suggest. In fact, when k = 1, the model appears to 
-overfit the data, while with higher values of k it tends to underfit the data. 
-
-
-/*#figure(grid(columns: 2, row-gutter: 2mm, column-gutter: 1mm,
-
-  image("/Image/train_knn.png"), image("Image/test_knn.png"), 
-
-  "a) train set", "b) test set"),
-
-  caption: "Caption"
-
-)*/
+<t3>
+As last subtask we implemented a `KNN (K-Nearest-Neighbor)` classifier.  
+We iterated over different values of `k` (from 1 to 9) to find how the accuracy changes. We obtained the best results with `k=1`, this because with low values of `k` capture more details in the data, but can also lead to overfitting.\
+We obtain the same accuracy, for both train and test set, as the `nearest mean classifier`, probably because `KNN` without tuning the hyperparameters `metric` and `p` use the L2 norm as well. This explains why the results are the same, as is possible to see in the confusion matrices in #link(<5>)[Figure 5].
 
 = Task 2: implement a multi-class perceptron algorithm
 Task 2 required us to implement a multi-class perceptron from scratch in order to classify the same MINST dataset.\
@@ -114,7 +100,7 @@ We trained the model using different learning rates, specifically 0.001, 0.0001 
   image("/Image/acc.png", width: 100%),
   caption: "Training accuracy during the epochs",
 )
-
+To achieve better results it is necessary to create a more complex Neural Network, with more layers in order to capture more details in the data. A single perceptron is not enough, but an accuracy of 0.87% in the `test_set`, is better than the results obtained in #link(<t2>)[Task 1.3] and #link(<t3>)[1.4] with the `nearest mean classifier` and `KNN`.
 = Contributions
 #set align(center)
 #table(
