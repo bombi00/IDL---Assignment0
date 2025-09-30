@@ -14,7 +14,7 @@
 #set align(left)
 = Task 1: Data dimensionality, distance-based classifiers
 == Task 1.1 <t>
-The first point of this task, ask us to calculate the center for each digit (from 0 to 9) from the MINST dataset in order to obtain a vector of dimension 256 ($16*16$ pixels) and a matrix of shape (10, 256).\
+The first point of this task asks us to calculate the center for each digit (from 0 to 9) from the MINST dataset in order to obtain a vector of dimension 256 ($16*16$ pixels) and a matrix of shape (10, 256).\
 We have imported the dataset and merged the file `train_in` with `train_out` to have a single  labeled dataframe. Then we have calculated the center of each digit using the `groupby` function from pandas and the `mean` function.\
 Once obtained the centers, we calculated the distance matrix by iterating over each pair of digit centers using two nested loops and computing the L2 norm (Euclidean distance) between them.
 
@@ -24,12 +24,12 @@ Once obtained the centers, we calculated the distance matrix by iterating over e
   caption: "Distance Matrix for the centers of each digit" ,
 )
 
-As is possible to see from the #link(<1>)[Figure 1], the digit that are more problematic to classify, using only the centers, are the 9 and 7, where the most distanced classes are 0 and 1.\
+As it's possible to see from the #link(<1>)[Figure 1], the digits that are more problematic to classify, using only the centers, are the 9 and 7, where the most distanced classes are 0 and 1.\
 
 == Task 1.2
-As second part of task 1, we reduced the dimensionality of the data using three different techniques: PCA, U-MAP and T-SNE.\
+In the second part of task 1, we reduced the dimensionality of the data using three different techniques: PCA, U-MAP and T-SNE.\
 === PCA
-We have used the PCA implementation from sklearn, setting the number of components to 2, in order to obtain a two dimension space, and setting the random state to 42 to have reproducible results.\
+We have used the PCA implementation from sklearn, setting the number of components to 2, in order to obtain a two dimension space, and setting the random state to 42 to obtain reproducible results.\
 The #link(<2>)[Figure 2] shows the results where the different colors represent the different digits. Zero is the most separated class, where the other are in clusters mixed toghether.
 <2>
 #figure(
@@ -76,8 +76,8 @@ this is due to the different sample size of the train and the test set (1706 and
 == Task 1.4
 <t3>
 As last subtask we implemented a `KNN (K-Nearest-Neighbor)` classifier.  
-We iterated over different values of `k` (from 1 to 9) to find how the accuracy changes. We obtained the best results with `k=1`, this because with low values of `k` capture more details in the data, but can also lead to overfitting.\
-We obtain the same accuracy, for both train and test set, as the `nearest mean classifier`, probably because `KNN` without tuning the hyperparameters `metric` and `p` use the L2 norm as well. This explains why the results are the same, as is possible to see in the confusion matrices in #link(<5>)[Figure 5].
+We iterated over different values of `k` (from 1 to 9) to find how the accuracy changes. We obtained the best results with `k=1`: this happened because low values of `k` capture more details in the data, but it can also lead to overfitting.\
+We obtained the same accuracy, for both train and test set, as the `nearest mean classifier`, probably because `KNN` without tuning the hyperparameters `metric` and `p` use the L2 norm as well. This explains why the results are the same, as is possible to see in the confusion matrices in #link(<5>)[Figure 5].
 
 = Task 2: implement a multi-class perceptron algorithm
 Task 2 required us to implement a multi-class perceptron from scratch in order to classify the same MINST dataset.\
@@ -85,10 +85,10 @@ We have created the class `Perceptron` with attributes such as learning rate, nu
 As methods we have implemented the `fit` function used to train the model, the `predict` method used to predict the labels using the trained weights and `accuracy` to calculate, as the name suggests, the accuracy of the predicted classes.\
 == Fit method
 The `fit` function takes as input the training data and the corresponding labels. First we initialize the weights, with values between 0 and 0.01, using the same shape of the input `X` data.\
-Then we iterate with two loops, first over each epoch, and then for every samples in the training set. We implemented the forward pass using `z = x @ self.W + self.b` to perform the dot product betweem the input and the weights and adding the bias, and then we used the `argmax` to obtain the most probable class. In this iteration we also calculate the if the prediction is wrong, useful to update the weights and bias, and also the loss (MSE).\
+Then we iterate with two loops, first over each epoch, and then for every samples in the training set. We implemented the forward pass using `z = x @ self.W + self.b` to perform the dot product between the input and the weights and adding the bias, and then we used the `argmax` to obtain the most probable class. In this iteration we also calculate the if the prediction is wrong, useful to update the weights and bias, and also the loss (MSE).\
 For the weights and bias update we used another loop to iterate over each class. We adjust the bias as `bias = bias + learning_rate * error` and the weights as `weights = weights + learning_rate * error * x`.
 == Results
-We trained the model using different learning rates, specifically 0.001, 0.0001 and 0.00001, with 70 epochs and for each of them we plotted the loss curve and calculated the accuracy. In particular, we obtained the best result with a learning rate of 0.0001, reaching, as is possible to see in the #link(<6>)[Figure 6 and 7], an accuracy of almost 0.95% in the `train_set` where in the `test_set`the accuracy is 0.87%.
+We trained the model using different learning rates, specifically 0.001, 0.0001 and 0.00001, with 70 epochs and for each of them we plotted the loss curve and calculated the accuracy. In particular, we obtained the best result with a learning rate of 0.0001, reaching, as is possible to see in the #link(<6>)[Figure 6 and 7], an accuracy of almost 0.95% in the `train_set` where in the `test_set` the accuracy is 0.87%.
 
 
 #figure(
