@@ -16,7 +16,7 @@ g
 The first point of this task, ask us to calculate the center for each digit (from 0 to 9) from the MINST dataset in order to obtain a vector of dimension 256 ($16*16$ pixels) and a matrix of shape (10, 256).\
 We have imported the dataset and merged the file `train_in` with `train_out` to have a single  labeled dataframe. Then we have calculated the center of each digit using the `groupby` function from pandas and the `mean` function.\
 Once obtained the centers, we calculated the distance matrix by iterating over each pair of digit centers using two nested loops and computing the L2 norm (Euclidean distance) between them.
-
+shshshsh
 
 <1>
 #figure(
