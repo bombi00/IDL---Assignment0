@@ -9,7 +9,7 @@
     content,
   )
 )
-
+g
 #set align(left)
 = Task 1: Data dimensionality, distance-based classifiers
 == Task 1.1
