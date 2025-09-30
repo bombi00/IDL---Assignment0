@@ -9,14 +9,15 @@
     content,
   )
 )
-g
+
+
 #set align(left)
 = Task 1: Data dimensionality, distance-based classifiers
 == Task 1.1
 The first point of this task, ask us to calculate the center for each digit (from 0 to 9) from the MINST dataset in order to obtain a vector of dimension 256 ($16*16$ pixels) and a matrix of shape (10, 256).\
 We have imported the dataset and merged the file `train_in` with `train_out` to have a single  labeled dataframe. Then we have calculated the center of each digit using the `groupby` function from pandas and the `mean` function.\
 Once obtained the centers, we calculated the distance matrix by iterating over each pair of digit centers using two nested loops and computing the L2 norm (Euclidean distance) between them.
-shshshsh
+
 
 <1>
 #figure(
@@ -53,6 +54,15 @@ With T-SNE we have achived a result not good as U-MAP but still better than PCA.
 )
 == Task 1.3
 
+
+We implemented a nearest mean classifier both on the train and test set: this method is based on evaluation of the L2 norm. 
+Looking at the confusion matrix of the train set in #link(<5>)[Figure 5], we can see that the most problematic digits to classify 
+are 0 and 6, 7 and 9, 4 and 9. For the test set the most problematic digits are 0 and 6, 2 and 8 and 0 and 8. 
+The results are very similar between the two sets, with an accuracy of 0.86% for the train set and 0.80% for the test set: 
+this is due to the different sample size of the train and the test set (1706 and 999 respectively).
+
+
+
 <5>
 #figure(grid(columns: 2, row-gutter: 2mm, column-gutter: 1mm,
 
@@ -65,7 +75,14 @@ With T-SNE we have achived a result not good as U-MAP but still better than PCA.
 )
 
 == Task 1.4
-Stesso risultato perchè KNN usa L2 norm e con n=1 il risultato è lo stesso. diversi n invece danno risulatit diversi.
+We implemented a KNN (K-Nearest-Neighbor) classifier. The resulting confusion matrix is 
+the same as the nearest mean classifier, both for the train and test set, because we used k=1 and 
+the same distance metric (L2 norm). 
+By iterating the same procedure with increasing values of k, we can observe that the accuracy decreases,
+as the theory would suggest. In fact, when k = 1, the model appears to 
+overfit the data, while with higher values of k it tends to underfit the data. 
+
+
 /*#figure(grid(columns: 2, row-gutter: 2mm, column-gutter: 1mm,
 
   image("/Image/train_knn.png"), image("Image/test_knn.png"), 
